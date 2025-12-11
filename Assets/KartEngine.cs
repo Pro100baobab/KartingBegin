@@ -1,28 +1,16 @@
 using UnityEngine;
 
-/// <summary>
-/// KartEngine.
-/// Этап 1: простейший двигатель с постоянным моментом.
-/// </summary>
+
 public class KartEngine : MonoBehaviour
 {
-    // Заменяем существующие поля на ссылку на ScriptableObject
     [Header("Kart Settings")]
     [SerializeField] private KartSettings _kartSettings;
 
     [Header("RPM settings")]
     [SerializeField] private float _idleRpm = 1000f;
-    //[SerializeField] private float _maxRpm = 8000f;
     [SerializeField] private float _revLimiterRpm = 7500f;
 
-
-    //[Header("Torque curve")]
-    //[SerializeField] private AnimationCurve _torqueCurve;
-
-
     [Header("Inertia & response")]
-    //[SerializeField] private float _flywheelInertia = 0.2f;
-
     [Tooltip("Скорость отклика газа (1/с).")]
     [SerializeField] private float _throttleResponse = 5f;
 
@@ -33,11 +21,11 @@ public class KartEngine : MonoBehaviour
     [Tooltip("Нагрузка от машины, Н*м / (м/с).")]
     [SerializeField] private float _loadTorqueCoeff = 5f;
 
+
     public float SmoothedThrottle { get; private set; }
     public float CurrentRpm { get; private set; }
     public float CurrentTorque { get; private set; }
     public float RevLimiterFactor { get; private set; } = 1f;
-
 
     public float DriveTorque { get; private set; }
     public float FrictionTorque { get; private set; }
@@ -47,12 +35,8 @@ public class KartEngine : MonoBehaviour
 
     private float _invInertiaFactor;
 
-    /// <summary>
-    /// throttleInput [-1;1], forwardSpeed (м/с), gearRatio, wheelRadius.
-    /// </summary>
     public float Simulate(float throttleInput, float forwardSpeed, float deltaTime)
     {
-        // сглаживаем газ
         float targetThrottle = Mathf.Clamp(throttleInput, -1f, 1f);
         SmoothedThrottle = Mathf.MoveTowards(SmoothedThrottle, targetThrottle, _throttleResponse * deltaTime);
 

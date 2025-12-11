@@ -1,4 +1,3 @@
-// KartSettings.cs
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "KartSettings", menuName = "Karting/Kart Settings")]
